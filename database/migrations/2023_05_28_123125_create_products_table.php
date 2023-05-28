@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('details');
+            $table->string('name', 3000); // Set the length to 3000 characters
+            $table->string('details', 3000); // Set the length to 3000 characters
             $table->integer('price');
             $table->integer('stock');
             $table->integer('discount');
-           $table->timestamps();
+            $table->timestamps();
         });
     }
 
@@ -30,3 +30,4 @@ return new class extends Migration
         Schema::dropIfExists('products');
     }
 };
+

@@ -2,22 +2,38 @@
 
 namespace Database\Factories\Model;
 
+use App\Models\Model\Review;
+use App\Models\Model\Product;
+use Faker\Factory as Faker; // Update the import statement
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model\Review>
- */
 class ReviewFactory extends Factory
 {
     /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Review::class;
+
+    /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
-    public function definition(): array
+    public function definition()
     {
+        $faker = Faker::create();
+
         return [
-            //
+            'product_id' => function () {
+                return Product::all()->random();
+            },
+            'customer' => $faker->name,
+            'review' => $faker->paragraph,
+            'star' => $faker->numberBetween(0, 5),
         ];
     }
 }
+
+
