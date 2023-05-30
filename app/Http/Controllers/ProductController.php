@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\Model\Product;
+use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\Request;
 use App\Http\Requests\StoreProductsRequest;
 use App\Http\Requests\UpdateProductsRequest;
 use App\Http\Resources\Product\ProductResource;
@@ -13,10 +16,14 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except('index', 'show');
+    }
+    
     public function index()
     {
         return ProductCollection::collection(Product::paginate(50));
-
     }
 
     /**
@@ -24,15 +31,23 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductsRequest $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $product = new Product;
+        $product->name = $request->name;
+        $product->details = $request->details;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+        $product->discount = $request->discount;
+        $product->save();
+        return response([
+            'data' => new ProductResource($product)
+        ],Response::HTTP_CREATED );
     }
 
     /**
@@ -67,4 +82,3 @@ class ProductController extends Controller
         //
     }
 }
-
