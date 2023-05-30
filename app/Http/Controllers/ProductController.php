@@ -84,6 +84,7 @@ public function update(Request $request, Product $product) // Update the paramet
      */
     public function destroy(Product $product) // Update the parameter name to $product
     {
-        //
+         $product->delete();
+         return response('null',204);
     }
 }
