@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Models\Model\Product;
 use App\Http\Requests\ProductRequest;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use App\Http\Requests\StoreProductsRequest;
 use App\Http\Requests\UpdateProductsRequest;
 use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\Product\ProductCollection;
-
 class ProductController extends Controller
 {
     /**
@@ -47,7 +47,7 @@ class ProductController extends Controller
         $product->save();
         return response([
             'data' => new ProductResource($product)
-        ],Response::HTTP_CREATED );
+        ],201);
     }
 
     /**
@@ -65,14 +65,19 @@ class ProductController extends Controller
     {
         //
     }
+/**
+ * Update the specified resource in storage.
+ */
+public function update(Request $request, Product $product) // Update the parameter name to $product
+{
+    $request['details']= $request->description;
+    unset($request['description']);
+    $product->update($request->all());
+    return response([
+        'data' => new ProductResource($product)
+    ],201);
+}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateProductsRequest $request, Product $product) // Update the parameter name to $product
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
