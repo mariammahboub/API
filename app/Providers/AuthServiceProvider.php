@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Providers;
-
-// use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+// use App\Policies\Model\Policy;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -12,15 +12,16 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array<class-string, class-string>
      */
-    protected $policies = [
-        //
-    ];
+    // protected $policies = [
+    //     'App\Model'=>'Policy',
+    // ];
 
     /**
      * Register any authentication / authorization services.
      */
     public function boot(): void
     {
-        //
+        Passport::loadKeysFrom(__DIR__.'/../secrets/oauth');
+
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\PassportServiceProvider;
 
 return [
 
@@ -154,6 +155,9 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
+    'passport' => [
+        'private_key' => 'C:\path\to\oauth-private.key',
+    ],
 
     'providers' => ServiceProvider::defaultProviders()->merge([
         /*
@@ -165,9 +169,11 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
+
     ])->toArray(),
 
     /*
