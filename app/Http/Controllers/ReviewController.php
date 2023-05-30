@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Model\Review; 
 use App\Models\Model\Product;  
 use App\Http\Requests\ReviewRequest;
-use Illuminate\Support\Facades\Request;
 use App\Http\Requests\UpdateReviewRequest;
 use App\Http\Resources\Review\ReviewResource;
+use Illuminate\Http\Request; // Add this line
 
 class ReviewController extends Controller
 {
@@ -51,16 +51,20 @@ class ReviewController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateReviewRequest $request, Review $review)
+    public function update(Request $request,Product $product, Review $review)
     {
-        //
+        $review->update($request->all());
+        return response([
+            'data' => $review 
+        ], 201);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Review $review)
+    public function destroy(Product $product, Review $review)
     {
-        //
+        $review->delete();
+        return response( 'null', 204);
     }
 }
