@@ -1,6 +1,9 @@
 <?php
 
 
+use API\LoginController;
+use Api\LogoutController;
+use API\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReviewController;
@@ -21,3 +24,6 @@ Route::group(['prefix' => 'products'], function() {
     Route::apiResource('{product}/reviews', 'ReviewController');
 
 });
+Route::post('/register','RegisterController@register');
+Route::post('/login','LoginController@login');
+Route::middleware('auth:api')-> post('logout','LogoutController@logout');
